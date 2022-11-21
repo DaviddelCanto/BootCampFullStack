@@ -1,0 +1,63 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { useState } from 'react';
+
+const WarningNotUsed =()=>{
+  return <h1>Todavía no se ha usado el contador</h1>
+}
+
+const ListofClicks=({clicks})=>{
+  // console.log({clicks})
+  // debugger
+  return <h1>{clicks.join(', ')}</h1>
+}
+const App = () => {
+ 
+  // const [counters,setCounters] = useState({
+  //   left:0,
+  //   right:0,
+  //   mensaje: 'Mensaje en el estado'
+  // })
+
+  const [clicks,setClicks] = useState([])
+
+  const handleClickLeft = (event) =>{
+    setClicks(prevClicks => [...prevClicks,'L'])
+  }
+
+  const handleClickRight = () =>{
+    setClicks(prevClicks => [...prevClicks,'R'])
+  }
+
+  const handlReset = () =>{setClicks([])}
+
+  const left = clicks.filter(click => click === 'L')
+  const right = clicks.filter(click => click === 'R')
+
+  return (
+    <div>
+      {left.length}
+      <button onClick={handleClickLeft}>left</button>
+      <button onClick={(handleClickRight)}>right</button>
+      {right.length}
+      <p>
+        <button onClick={handlReset}>reset</button>
+      </p>
+      <p>Clicks totales: {clicks.length}</p>
+      {clicks.length===0 ? (
+        <WarningNotUsed />
+      )  : (
+        <ListofClicks clicks={clicks} />
+      )}
+    </div>
+  )
+}
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
